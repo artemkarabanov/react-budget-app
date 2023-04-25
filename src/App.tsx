@@ -1,14 +1,14 @@
-import React from "react";
+import { Budget } from "./components";
+import { Expenses } from "./components";
+import { Form } from "./components";
+import { StyledApp } from "./styles";
 
-import { Badget } from "./components/Badge/Badge";
-import { Container } from "./ui";
-
-function App() {
+export const App = () => {
   return (
-    <Container>
-      <Badget />
-    </Container>
+    <StyledApp>
+      <Budget />
+      <Expenses />
+      <Form />
+    </StyledApp>
   );
-}
-
-export default App;
+};

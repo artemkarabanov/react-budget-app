@@ -1,52 +1,43 @@
-import React, { ReactNode, createContext, useContext, useState } from "react";
-import { Option } from "../types";
-import { Currency } from "../../config/currency";
+import { useContext } from "react";
+import { createContext, useState } from "react";
+import { ICurrencyContext, ICurrencyContextProviderProps } from "./types";
+import { Currency } from "../../config";
 
-interface CurencyContextState {
-  curency: Option;
-  options: Option[];
-  addCurency: (curency: Option) => void;
-}
+const CurrencyContext = createContext<ICurrencyContext>({} as ICurrencyContext);
 
-interface CurencyContextProviderProps {
-  children: ReactNode;
-}
-
-const options: Option[] = [
-  { value: Currency.USD, label: "USD" },
-  { value: Currency.EUR, label: "EUR" },
-  { value: Currency.GBR, label: "GBR" },
-];
-
-const CurencyContext = createContext<CurencyContextState>(
-  {} as CurencyContextState
-);
-
-const useCurencyValue = () => {
-  const [curencyValue, setCurencyValue] = useState<CurencyContextState>(() => {
-    return {
-      curency: options[0],
-      options: options,
-      addCurency: (curency: Option) => {
-        setCurencyValue((context) => ({
-          ...context,
-          curency: curency,
-        }));
+const useCurrencyContextValue = () => {
+  const [currencyContext, setCurrencyContext] = useState<ICurrencyContext>(() => ({
+    curentCurrency: {
+      label: "USD",
+      value: Currency.USD,
+    },
+    currencies: [
+      {
+        label: "USD",
+        value: Currency.USD,
       },
-    };
-  });
-
-  return curencyValue;
+      {
+        label: "EUR",
+        value: Currency.EUR,
+      },
+      {
+        label: "GBR",
+        value: Currency.GBR,
+      },
+    ],
+    setNewCurrency: (curentCurrency) => {
+      setCurrencyContext((ctx) => ({ ...ctx, curentCurrency }));
+    },
+  }));
+  return currencyContext;
 };
 
-export const useCurencyContext = () => useContext(CurencyContext);
+export const useCurrencyContext = () => useContext<ICurrencyContext>(CurrencyContext);
 
-export const CurencyContextProvider = ({
-  children,
-}: CurencyContextProviderProps) => {
+export const CurrencyContextProvider = ({ children }: ICurrencyContextProviderProps) => {
   return (
-    <CurencyContext.Provider value={useCurencyValue()}>
+    <CurrencyContext.Provider value={useCurrencyContextValue()}>
       {children}
-    </CurencyContext.Provider>
+    </CurrencyContext.Provider>
   );
 };

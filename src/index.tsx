@@ -1,19 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-
 import {
-  BadgetContextProvider,
-  CurencyContextProvider,
+  AppContext,
+  CurrencyContextProvider,
+  BudgetContextProvider,
   ExpensesContextProvider,
-} from "contex";
-import { GlobalStyles } from "./ui";
+} from "./context";
+import { GlobalStyles } from "./GlobalStyles";
+import ReactDOM from "react-dom/client";
+import { App } from "./App";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <BadgetContextProvider>
+  <AppContext
+    components={[CurrencyContextProvider, BudgetContextProvider, ExpensesContextProvider]}
+  >
+    <GlobalStyles />
     <App />
-  </BadgetContextProvider>
+  </AppContext>,
 );

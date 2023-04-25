@@ -1,38 +1,21 @@
-import React from "react";
-import { StyledRemainingCardText } from "./styles";
-import {
-  useBadgetContext,
-  useCurencyContext,
-  useExpensesContext,
-} from "contex";
+import { useBudgetContext, useCurrencyContext, useExpensesContext } from "../../context";
+import { StyledRemainingCard, Title } from "./styles";
 
-interface RemainingCardProps {
-  curency: string;
-  setRemaining: number;
-}
+export const RemainingCard = () => {
+  const { curentCurrency } = useCurrencyContext();
+  const { budget } = useBudgetContext();
+  const { expenses } = useExpensesContext();
 
-export const RemainingCard = ({
-  curency,
-  setRemaining,
-}: RemainingCardProps) => {
-  //const text = +setRemaining < 0 ? "Overspending by " : "Remaining: ";
-  //const sumRemaining = +setRemaining < 0 ? Math.abs(+setRemaining) : +setRemaining;
+  const remaining = budget.value - expenses.reduce((remaining, { cost }) => remaining + +cost, 0);
+  const isOverspent = remaining < 0;
+
   return (
-    <StyledRemainingCardText>
-      Remaining: {curency}
-      {setRemaining}
-    </StyledRemainingCardText>
+    <StyledRemainingCard $isOverspending={isOverspent}>
+      <Title>
+        {isOverspent ? "Overspending by " : "Remaining:"}
+        {curentCurrency.value}
+        {Math.abs(remaining)}
+      </Title>
+    </StyledRemainingCard>
   );
 };
-
-// export const RemainingCard = ({ curency, setRemaining }: RemainingCardProps) => {
-//   const text = +setRemaining < 0 ? "Overspending by " : "Remaining: ";
-//   const sumRemaining = +setRemaining < 0 ? Math.abs(+setRemaining) : +setRemaining;
-//   return (
-//     <StyledRemainingCardText>
-//       {text}
-//       {curency}
-//       {sumRemaining}
-//     </StyledRemainingCardText>
-//   );
-// };

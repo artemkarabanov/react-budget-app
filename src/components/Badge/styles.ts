@@ -1,18 +1,13 @@
 import styled from "styled-components";
 
-const StyledBadget = styled.div`
-  display: grid;
-  grid-gap: 20px;
-`;
-const BudgetApp = styled.div`
-  display: grid;
-  grid-gap: 30px;
-  grid-template-columns: auto 100px;
-  align-items: center;
-`;
-const BudgetGroup = styled.div`
-  display: grid;
-  grid-gap: 20px;
+const StyledBudge = styled.div`
+  display: inline-block;
+  padding: 3px 14px 2px;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #fff;
+  background: #23c9ff;
+  border-radius: 10px;
 `;
 
-export { StyledBadget, BudgetApp, BudgetGroup };
+export { StyledBudge };
